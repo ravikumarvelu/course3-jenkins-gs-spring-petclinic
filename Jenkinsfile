@@ -1,12 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage("checkout"){
-            steps{
-                git branch: 'main', url: 'https://github.com/ravikumarvelu/course3-jenkins-gs-spring-petclinic.git'
-            }
-            
-        }
+        
         stage("build"){
             steps{
                 bat "./mvnw package"
@@ -14,7 +9,7 @@ pipeline{
             
         }
         stage("capture"){
-            steps{
+            parallel {
                 archiveArtifacts artifacts: '**/target/*.jar', followSymlinks: false
                 junit '**/target/surefire-reports/TEST*.xml'
                 jacoco()   
