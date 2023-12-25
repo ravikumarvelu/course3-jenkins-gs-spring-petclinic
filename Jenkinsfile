@@ -9,7 +9,7 @@ pipeline{
             
         }
         stage("capture"){
-            parallel {
+            steps {
                 archiveArtifacts artifacts: '**/target/*.jar', followSymlinks: false
                 junit '**/target/surefire-reports/TEST*.xml'
                 jacoco()   
